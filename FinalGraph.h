@@ -113,9 +113,9 @@ class Graph{
         void FindTruePaths_f2();
 
         int numberOfTruePaths_r;
-        int	numberOfFalsePaths_r;
+        int numberOfFalsePaths_r;
         int numberOfTruePaths_f;
-        int	numberOfFalsePaths_f;
+        int numberOfFalsePaths_f;
 
         int timing_constraint;
         int slack_constraint;
