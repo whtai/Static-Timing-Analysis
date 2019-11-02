@@ -10,7 +10,6 @@
 #include <queue>
 #include <string.h>
 #include <sstream>
-#include <algorithm>
 #include <queue>
 #include <iostream>
 #include <iomanip>
@@ -26,19 +25,17 @@ class Node;
 class Table;
 
 class Edge{
-
 	public:
 		Edge(const string &);
 		void AddOutput(Node *, const string &);
 
 		Node *input_gate;
-    map<string ,Node *> output_gates_from_wire;
+        map<string ,Node *> output_gates_from_wire;
 
 		string wire_name;
 };
 
 class Node{
-
 	public:
 		Node(const string &, int);
 		void AddOutputGate(Node *, const string &);
@@ -67,18 +64,18 @@ class Path{
 };
 
 class Graph{
-  friend void OutputPath(Graph &, Path *);
+    friend void OutputPath(Graph &, Path *);
 
 	public:
-		Graph(const string&, int, int);
-		~Graph();
-    void ReadTimingConstraint(const string&);
-    void BuildGraph(const string &);
-    void ConnectGates();
-    void FindAllPaths();
-    void SubFindAllPaths(Node *, Path *);
-    void DisplayAllPaths();
-    void AllNodesInformation();
+        Graph(const string&, int, int);
+        ~Graph();
+        void ReadTimingConstraint(const string&);
+        void BuildGraph(const string &);
+        void ConnectGates();
+        void FindAllPaths();
+        void SubFindAllPaths(Node *, Path *);
+        void DisplayAllPaths();
+        void AllNodesInformation();
 
 		map<string, Edge *> wires;  //A container to store all the wires in the circuit
 		map<string ,Node *> gates;  //A container to store all the internal gates in the circuit
@@ -90,7 +87,6 @@ class Graph{
 
 		vector<Path *> TruePathsAfterImplication;
 		vector<Path *> FalsePathsAfterImplication;
-
 
 		//CORE ALGORITHMS
 		void Implication();
@@ -111,46 +107,34 @@ class Graph{
 		void Restore_Stable_Time(Table &);
 		int CountKnownInputs();
 		void FindTruePaths();
-    void FindTruePaths_r1();
-    void FindTruePaths_r2();
-    void FindTruePaths_f1();
-    void FindTruePaths_f2();
+        void FindTruePaths_r1();
+        void FindTruePaths_r2();
+        void FindTruePaths_f1();
+        void FindTruePaths_f2();
 
-    int numberOfTruePaths_r;
-    int	numberOfFalsePaths_r;
-    int numberOfTruePaths_f;
-    int	numberOfFalsePaths_f;
-    
-    int timing_constraint;
-    int slack_constraint;
-    int final_path_counter;
+        int numberOfTruePaths_r;
+        int	numberOfFalsePaths_r;
+        int numberOfTruePaths_f;
+        int	numberOfFalsePaths_f;
 
-    //fstream outfile;
-    //void StartOutputFile();
-    //void OutputPath(Path *);
-    //void EndOutputFile();
+        int timing_constraint;
+        int slack_constraint;
+        int final_path_counter;
     
-    int fail_index;
+        int fail_index;
 
     private:
-        //int gates_num;
-
-    bool isOne(Node *);
+        bool isOne(Node *);
 		bool isZero(Node *);
 		bool isUnknown(Node *);
 		bool isConflicted(Node *);
 		int CountRelevantInputs(Node *, set<string> &);
-
 };
 
 class Table{
 	public:
-		//Table();
 		void Record(Graph &);
 		map<Node *, tuple<int, int, int, int> > FullTable;
-	private:
-
 };
-
 
 #endif
