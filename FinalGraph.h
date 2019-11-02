@@ -36,7 +36,7 @@ class Edge{
 };
 
 class Node{
-	public:
+    public:
         Node(const string &, int);
         void AddOutputGate(Node *, const string &);
 
