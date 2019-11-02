@@ -1,13 +1,14 @@
 #include "FinalGraph.h"
+
 void StartOutputFile(string);
 void EndOutputFile();
-extern int final_path_counter;
 
 int main(int argc, char* argv[]) {
     if (argc != 4) {
         cerr << "Format: ./cadb105 [case_name] [timing_constraint] [slack_constraint]" << endl;
         return 1;
     }
+    
     string case_name = argv[1];
     int timing = atoi(argv[2]);
     int slack = atoi(argv[3]);
@@ -17,17 +18,17 @@ int main(int argc, char* argv[]) {
     StartOutputFile(case_name);
     
     if(case_name[4] == '2' || case_name[4] == '3' || case_name[4] == '4'){
-	    Graph G(case_name, timing, slack);
-	    G.BuildGraph(name2);
-	    G.ConnectGates();
-	    G.FindAllPaths();
+        Graph G(case_name, timing, slack);
+        G.BuildGraph(name2);
+        G.ConnectGates();
+        G.FindAllPaths();
 
-	    G.FindTruePaths_f1();
-	    G.FindTruePaths_f2();
-	    G.FindTruePaths_r1();
-	    G.FindTruePaths_r2();
+        G.FindTruePaths_f1();
+        G.FindTruePaths_f2();
+        G.FindTruePaths_r1();
+        G.FindTruePaths_r2();
 
-	    EndOutputFile();   
+        EndOutputFile();   
     }else{
         Graph G(case_name, timing, slack);
         Graph H(case_name, timing, slack);
@@ -61,5 +62,5 @@ int main(int argc, char* argv[]) {
 
         EndOutputFile(); 
     }
-	return 0;
+    return 0;
 }
