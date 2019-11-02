@@ -29,37 +29,37 @@ int main(int argc, char* argv[]) {
 
 	    EndOutputFile();   
     }else{
-		Graph G(case_name, timing, slack);
-		Graph H(case_name, timing, slack);
-		Graph I(case_name, timing, slack);
-		Graph J(case_name, timing, slack);
+        Graph G(case_name, timing, slack);
+        Graph H(case_name, timing, slack);
+        Graph I(case_name, timing, slack);
+        Graph J(case_name, timing, slack);
 
-		G.BuildGraph(name2);
-		H.BuildGraph(name2);
-		I.BuildGraph(name2);
-		J.BuildGraph(name2);
+        G.BuildGraph(name2);
+        H.BuildGraph(name2);
+        I.BuildGraph(name2);
+        J.BuildGraph(name2);
 
-		G.ConnectGates();
-		H.ConnectGates();
-		I.ConnectGates();
-		J.ConnectGates();
+        G.ConnectGates();
+        H.ConnectGates();
+        I.ConnectGates();
+        J.ConnectGates();
 
-		G.FindAllPaths();
-		H.FindAllPaths();
-		I.FindAllPaths();
-		J.FindAllPaths();   
+        G.FindAllPaths();
+        H.FindAllPaths();
+        I.FindAllPaths();
+        J.FindAllPaths();   
 
-		thread Thread1([&](){ G.FindTruePaths_r1(); });
-		thread Thread2([&](){ H.FindTruePaths_f1();});
-		thread Thread3([&](){ I.FindTruePaths_r2(); });   
-		thread Thread4([&](){ J.FindTruePaths_f2();});
+        thread Thread1([&](){ G.FindTruePaths_r1(); });
+        thread Thread2([&](){ H.FindTruePaths_f1();});
+        thread Thread3([&](){ I.FindTruePaths_r2(); });   
+        thread Thread4([&](){ J.FindTruePaths_f2();});
 
-		Thread1.join();
-		Thread2.join();      
-		Thread3.join();
-		Thread4.join();
+        Thread1.join();
+        Thread2.join();      
+        Thread3.join();
+        Thread4.join();
 
-		EndOutputFile(); 
+        EndOutputFile(); 
     }
 	return 0;
 }
