@@ -1231,12 +1231,9 @@ bool Graph::Forward_Implication(Node *g, bool &Output_changed, bool exact_apply)
         return true;
     }
     else{
-
-    Output_changed = Apply(g, new_min0, new_max0, new_min1, new_max1);
-
-    if(isConflicted(g))	return false;
-    return true;
-
+        Output_changed = Apply(g, new_min0, new_max0, new_min1, new_max1);
+        if(isConflicted(g))	return false;
+        return true;
     }
 }
 
@@ -1781,161 +1778,152 @@ void Graph::FindTruePaths(){
 }
 
 void Graph::FindTruePaths_r1(){
+    for(int i=0; i<paths.size()/2; i++){
+        if(paths[i]->isFalse){
+            numberOfFalsePaths_r++;
+            paths[i]->isFalse = false;
+            //cout << "USEFUL!" << endl;
+            continue;
+        }
 
-  for(int i=0; i<paths.size()/2; i++){
-    
-    if(paths[i]->isFalse){
-      numberOfFalsePaths_r++;
-      paths[i]->isFalse = false;
-      //cout << "USEFUL!" << endl;
-      continue;
-    }
-  
-  	if( Verify_True_Path(paths[i], true) ){
-       //fail_index = -1;
-  		//set<string> t;
-  		//cout << "Path" << i+1 <<" (r) passes Implication." << endl;
-  		//cout << "Number of already determined inputs: " << CountKnownInputs() << endl;
-    		if( Justification() ){
-          OutputPath(*this, paths[i]);
-          numberOfTruePaths_r++;
+        if( Verify_True_Path(paths[i], true) ){
+            //fail_index = -1;
+            //set<string> t;
+            //cout << "Path" << i+1 <<" (r) passes Implication." << endl;
+            //cout << "Number of already determined inputs: " << CountKnownInputs() << endl;
+            if( Justification() ){
+                OutputPath(*this, paths[i]);
+                numberOfTruePaths_r++;
+            }
+            else{
+                numberOfFalsePaths_r++;
+            }
+            //cout << "Number of relevant inputs " << CountRelevantInputs(paths[i]->path_gates.back(), t) << endl<<endl;
+            //TruePathsAfterImplication.push_back(paths[i]);
         }
         else{
-          numberOfFalsePaths_r++;
+            //cout << "Path" << i+1 << " (r) fails Implication." << endl << endl;
+            //FalsePathsAfterImplication.push_back(paths[i]);
+
+            int j=i+1;
+            while(  j<paths.size() && (paths[j]->prvs_longest_same_gate_index) >= fail_index){
+                paths[j]->isFalse = true;
+                j++;
+            }     
+            numberOfFalsePaths_r++;
         }
-  		//cout << "Number of relevant inputs " << CountRelevantInputs(paths[i]->path_gates.back(), t) << endl<<endl;
-  		//TruePathsAfterImplication.push_back(paths[i]);
-  	}
-  	else{
-  		//cout << "Path" << i+1 << " (r) fails Implication." << endl << endl;
-  		//FalsePathsAfterImplication.push_back(paths[i]);
-      
-      int j=i+1;
-      while(  j<paths.size() && (paths[j]->prvs_longest_same_gate_index) >= fail_index){
-        paths[j]->isFalse = true;
-        j++;
-      }     
-  		numberOfFalsePaths_r++;
-  	}
-  }
+    }
 }
 
 void Graph::FindTruePaths_r2(){
+    for(int i=paths.size()/2; i<paths.size(); i++){
 
-  for(int i=paths.size()/2; i<paths.size(); i++){
-    
-    if(paths[i]->isFalse){
-      numberOfFalsePaths_r++;
-      paths[i]->isFalse = false;
-      //cout << "USEFUL!" << endl;
-      continue;
-    }
-  
-  	if( Verify_True_Path(paths[i], true) ){
-       //fail_index = -1;
-  		//set<string> t;
-  		//cout << "Path" << i+1 <<" (r) passes Implication." << endl;
-  		//cout << "Number of already determined inputs: " << CountKnownInputs() << endl;
-    		if( Justification() ){
-          OutputPath(*this, paths[i]);
-          numberOfTruePaths_r++;
+        if(paths[i]->isFalse){
+            numberOfFalsePaths_r++;
+            paths[i]->isFalse = false;
+            //cout << "USEFUL!" << endl;
+            continue;
+        }
+
+        if( Verify_True_Path(paths[i], true) ){
+            //fail_index = -1;
+            //set<string> t;
+            //cout << "Path" << i+1 <<" (r) passes Implication." << endl;
+            //cout << "Number of already determined inputs: " << CountKnownInputs() << endl;
+            if( Justification() ){
+                OutputPath(*this, paths[i]);
+                numberOfTruePaths_r++;
+            }
+            else{
+                numberOfFalsePaths_r++;
+            }
+            //cout << "Number of relevant inputs " << CountRelevantInputs(paths[i]->path_gates.back(), t) << endl<<endl;
+            //TruePathsAfterImplication.push_back(paths[i]);
         }
         else{
-          numberOfFalsePaths_r++;
+            //cout << "Path" << i+1 << " (r) fails Implication." << endl << endl;
+            //FalsePathsAfterImplication.push_back(paths[i]);
+
+            int j=i+1;
+            while(  j<paths.size() && (paths[j]->prvs_longest_same_gate_index) >= fail_index){
+                paths[j]->isFalse = true;
+                j++;
+            }     
+            numberOfFalsePaths_r++;
         }
-  		//cout << "Number of relevant inputs " << CountRelevantInputs(paths[i]->path_gates.back(), t) << endl<<endl;
-  		//TruePathsAfterImplication.push_back(paths[i]);
-  	}
-  	else{
-  		//cout << "Path" << i+1 << " (r) fails Implication." << endl << endl;
-  		//FalsePathsAfterImplication.push_back(paths[i]);
-      
-      int j=i+1;
-      while(  j<paths.size() && (paths[j]->prvs_longest_same_gate_index) >= fail_index){
-        paths[j]->isFalse = true;
-        j++;
-      }     
-  		numberOfFalsePaths_r++;
-  	}
-  }
+    }
 }
 
 void Graph::FindTruePaths_f1(){
+    for(int i=0; i<paths.size()/2; i++){
+        if(paths[i]->isFalse){
+            numberOfFalsePaths_f++;
+            paths[i]->isFalse = false;
+            //cout << "USEFUL!" << endl;
+            continue;
+        }
 
-	for(int i=0; i<paths.size()/2; i++){
-    
-    if(paths[i]->isFalse){
-      numberOfFalsePaths_f++;
-      paths[i]->isFalse = false;
-      //cout << "USEFUL!" << endl;
-      continue;
-    }
-
-		if( Verify_True_Path(paths[i], false) ){
-      //fail_index = -1;
-			//set<string> s;
-			//cout << "Path" << i+1 <<" (f) passes Implication." << endl;
-			//cout << "Number of already determined inputs: " << CountKnownInputs() << endl;
-    		if( Justification() ){
-           OutputPath(*this, paths[i]);
-           numberOfTruePaths_f++;
+        if( Verify_True_Path(paths[i], false) ){
+            //fail_index = -1;
+            //set<string> s;
+            //cout << "Path" << i+1 <<" (f) passes Implication." << endl;
+            //cout << "Number of already determined inputs: " << CountKnownInputs() << endl;
+            if( Justification() ){
+                OutputPath(*this, paths[i]);
+                numberOfTruePaths_f++;
+            }
+            else{
+                numberOfFalsePaths_f++;
+            }
+            //cout << "Number of relevant inputs " << CountRelevantInputs(paths[i]->path_gates.back(), s) << endl<<endl;
+            //TruePathsAfterImplication.push_back(paths[i]);
         }
         else{
-           numberOfFalsePaths_f++;
+            //cout << "Path" << i+1 << " (f) fails Implication." << endl << endl;
+            //FalsePathsAfterImplication.push_back(paths[i]);
+            int j=i+1;
+            while( j<paths.size() && (paths[j]->prvs_longest_same_gate_index) >= fail_index ){
+                paths[j]->isFalse = true;
+                j++;
+            }     
+            numberOfFalsePaths_f++;
         }
-			//cout << "Number of relevant inputs " << CountRelevantInputs(paths[i]->path_gates.back(), s) << endl<<endl;
-			//TruePathsAfterImplication.push_back(paths[i]);
-		}
-		else{
-			//cout << "Path" << i+1 << " (f) fails Implication." << endl << endl;
-			//FalsePathsAfterImplication.push_back(paths[i]);
-      
-      int j=i+1;
-      while( j<paths.size() && (paths[j]->prvs_longest_same_gate_index) >= fail_index ){
-        paths[j]->isFalse = true;
-        j++;
-      }     
-			numberOfFalsePaths_f++;
-		}
-	}
+    }
 }
 
 void Graph::FindTruePaths_f2(){
+    for(int i=paths.size()/2; i<paths.size(); i++){
+        if(paths[i]->isFalse){
+            numberOfFalsePaths_f++;
+            paths[i]->isFalse = false;
+            //cout << "USEFUL!" << endl;
+            continue;
+        }
 
-	for(int i=paths.size()/2; i<paths.size(); i++){
-    
-    if(paths[i]->isFalse){
-      numberOfFalsePaths_f++;
-      paths[i]->isFalse = false;
-      //cout << "USEFUL!" << endl;
-      continue;
-    }
-
-		if( Verify_True_Path(paths[i], false) ){
-      //fail_index = -1;
-			//set<string> s;
-			//cout << "Path" << i+1 <<" (f) passes Implication." << endl;
-			//cout << "Number of already determined inputs: " << CountKnownInputs() << endl;
-    		if( Justification() ){
-           OutputPath(*this, paths[i]);
-           numberOfTruePaths_f++;
+        if( Verify_True_Path(paths[i], false) ){
+            //fail_index = -1;
+            //set<string> s;
+            //cout << "Path" << i+1 <<" (f) passes Implication." << endl;
+            //cout << "Number of already determined inputs: " << CountKnownInputs() << endl;
+            if( Justification() ){
+                OutputPath(*this, paths[i]);
+                numberOfTruePaths_f++;
+            }
+            else{
+                numberOfFalsePaths_f++;
+            }
+            //cout << "Number of relevant inputs " << CountRelevantInputs(paths[i]->path_gates.back(), s) << endl<<endl;
+            //TruePathsAfterImplication.push_back(paths[i]);
         }
         else{
-           numberOfFalsePaths_f++;
+            //cout << "Path" << i+1 << " (f) fails Implication." << endl << endl;
+            //FalsePathsAfterImplication.push_back(paths[i]);
+            int j=i+1;
+            while( j<paths.size() && (paths[j]->prvs_longest_same_gate_index) >= fail_index ){
+                paths[j]->isFalse = true;
+                j++;
+            }     
+            numberOfFalsePaths_f++;
         }
-			//cout << "Number of relevant inputs " << CountRelevantInputs(paths[i]->path_gates.back(), s) << endl<<endl;
-			//TruePathsAfterImplication.push_back(paths[i]);
-		}
-		else{
-			//cout << "Path" << i+1 << " (f) fails Implication." << endl << endl;
-			//FalsePathsAfterImplication.push_back(paths[i]);
-      
-      int j=i+1;
-      while( j<paths.size() && (paths[j]->prvs_longest_same_gate_index) >= fail_index ){
-        paths[j]->isFalse = true;
-        j++;
-      }     
-			numberOfFalsePaths_f++;
-		}
-	}
+    }
 }
