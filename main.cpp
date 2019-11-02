@@ -4,8 +4,10 @@ void EndOutputFile();
 extern int final_path_counter;
 
 int main(int argc, char* argv[]) {
-    if(argc!=4) cout<<"Format: ./cadb105 [case_name] [timing_constraint] [slack_constraint]"<<endl;
-
+    if (argc != 4) {
+        cerr << "Format: ./cadb105 [case_name] [timing_constraint] [slack_constraint]" << endl;
+        return 1;
+    }
     string case_name = argv[1];
     int timing = atoi(argv[2]);
     int slack = atoi(argv[3]);
