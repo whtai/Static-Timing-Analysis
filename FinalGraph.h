@@ -25,7 +25,7 @@ class Node;
 class Table;
 
 class Edge{
-	public:
+    public:
         Edge(const string &);
         void AddOutput(Node *, const string &);
 
@@ -66,7 +66,7 @@ class Path{
 class Graph{
     friend void OutputPath(Graph &, Path *);
 
-	public:
+    public:
         Graph(const string&, int, int);
         ~Graph();
         void ReadTimingConstraint(const string&);
@@ -132,7 +132,7 @@ class Graph{
 };
 
 class Table{
-	public:
+    public:
         void Record(Graph &);
         map<Node *, tuple<int, int, int, int> > FullTable;
 };
