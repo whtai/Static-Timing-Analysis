@@ -7,7 +7,7 @@ The program can be built using ```make```. There is also a pre-compiled executab
 
 ## Usage
 The general format is:
-```./cadb105 [case_name] [timing_constraint] [slack_constraint]```
+```./cadb105 <case_name> <timing_constraint> <slack_constraint>```
 - ```case_name``` is the name of the directory containing the input files (a Verilog gate-level netlist and its associated Verilog model).
 - ```timing_constraint``` and ```slack_constraint``` are the predefined constraints for that specific testcase given by the contest. 
 
