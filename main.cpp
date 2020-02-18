@@ -5,7 +5,7 @@ void EndOutputFile();
 
 int main(int argc, char* argv[]) {
     if (argc != 4) {
-        cerr << "Format: ./cadb105 [case_name] [timing_constraint] [slack_constraint]" << endl;
+        cerr << "Format: ./cadb105 <case_name> <timing_constraint> <slack_constraint>" << endl;
         return 1;
     }
     
@@ -50,9 +50,9 @@ int main(int argc, char* argv[]) {
         I.FindAllPaths();
         J.FindAllPaths();   
 
-        thread Thread1([&](){ G.FindTruePaths_r1(); });
+        thread Thread1([&](){ G.FindTruePaths_r1();});
         thread Thread2([&](){ H.FindTruePaths_f1();});
-        thread Thread3([&](){ I.FindTruePaths_r2(); });   
+        thread Thread3([&](){ I.FindTruePaths_r2();});   
         thread Thread4([&](){ J.FindTruePaths_f2();});
 
         Thread1.join();
