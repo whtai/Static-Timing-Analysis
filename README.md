@@ -2,7 +2,7 @@
 ## Descriptions
 This program aims to efficiently identify true paths in a combinational logic circuit whose path delays exceed a predefined constraint. A true path is defined as a path where a change of value at the input (e.g., from  0 to 1) could propagate to the output. Our approach is based on the exact criterion as defined in [[1]](#1), which guarantees exactness, meaning that it will claim every true path to be true, and every false path to be false.
 
-Identifying true paths in a circuit is critical ane central to static timing analysis, since the longest true path constitutes the critical path delay and thus determines whether the timing constraints are met for a design. For a more complete description of the problem, visit the [contest website](https://cad-contest-2016.el.cycu.edu.tw/Problem_D/default.html).
+Identifying true paths in a circuit is critical and central to static timing analysis. The longest true path contributes to the critical path delay and thus determines whether the timing constraints are met for a design. For a more complete description of the problem, visit the [contest website](https://cad-contest-2016.el.cycu.edu.tw/Problem_D/default.html).
 
 ## Compilation
 The program can be built using ```make```. There is also a pre-compiled executable named ```cadb105``` in the repository.
