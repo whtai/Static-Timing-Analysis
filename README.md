@@ -1,12 +1,13 @@
 # Static Timing Analysis
 ## Descriptions
-This program aims to efficiently identify true paths with path delay larger than a predefined constraint in a combinational logic circuit. A true path is defined as a path where a change of value at the input (e.g., from  0 to 1) could propagate to the output. Those overly long true paths are the paths that could compromise the timing performance of a circuit. Evaluation in the contest was based on both correctness and runtime. For a more complete description of the problem, visit the [contest website](https://cad-contest-2016.el.cycu.edu.tw/Problem_D/default.html).
+This program aims to efficiently identify true paths in a combinational logic circuit whose path delays exceed a predefined constraint. A true path is defined as a path where a change of value at the input (e.g., from  0 to 1) could propagate to the output. Our approach is based on the exact criterion as defined in [[1]](#1), which guarantees exactness, meaning that it will claim every true path to be true, and every false path to be false.
+
+Identifying true paths in a circuit is critical ane central to static timing analysis, since the longest true path constitutes the critical path delay and thus determines whether the timing constraints are met for a design. For a more complete description of the problem, visit the [contest website](https://cad-contest-2016.el.cycu.edu.tw/Problem_D/default.html).
 
 ## Compilation
 The program can be built using ```make```. There is also a pre-compiled executable named ```cadb105``` in the repository.
 
 ## Usage
-The general format is:
 ```./cadb105 <case_name> <timing_constraint> <slack_constraint>```
 - ```case_name``` is the name of the directory containing the input files (a Verilog gate-level netlist and its associated Verilog model).
 - ```timing_constraint``` and ```slack_constraint``` are the predefined constraints for that specific testcase given by the contest. 
@@ -20,3 +21,7 @@ We can generate true path sets for the five public benchmarks with the following
 ./cadb105 case5 47 10
 ```
 Example output files for the five public benchmarks are provided in the ```./outputs``` directory.
+
+## References
+<a id="1">[1]</a> 
+R. Peset Llopis. 1994. Exact path sensitization in timing analysis. In Proceedings of the conference on European design automation (EURO-DAC ’94). IEEE Computer Society Press, Washington, DC, USA, 380–385.
