@@ -5,7 +5,7 @@ void EndOutputFile();
 
 int main(int argc, char* argv[]) {
     if (argc != 4) {
-        cerr << "Format: ./cadb105 <case_name> <timing_constraint> <slack_constraint>" << endl;
+        cerr << "Usage: ./cadb105 <case_name> <timing_constraint> <slack_constraint>" << endl;
         return 1;
     }
     
